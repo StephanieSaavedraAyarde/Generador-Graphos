@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+      <meta charset="UTF-8" />
+      <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+      <title>Generador de Nodos | Stephanie Saavedra </title>
+
+      <script type="text/javascript" src="https://unpkg.com/vis-network/standalone/umd/vis-network.min.js"></script>
+      <link href="css/style.css" rel="stylesheet">
+
+  </head>
+
+  <body>
+    
+    <nav>
+      <div id="titulo" >
+        <table>
+          <tr >
+            <td style="border: none;">
+              <img src="img/logo.png" alt="logo" style="width: 90px; height: 90px;" />
+            </td>
+
+            <td style="border: none;" >
+              <h2>Generador de Nodos</h2>
+            </td>
+
+            <td style="border: none;">
+              <ul class="botones" >
+                  <li class="nav-item">
+                    <a onclick="MostrarMatriz()" class="botones" style="font-size:25px; background-color:white; color: #014680; border-color: white;">Mostrar Matriz</a>
+                                     
+                  </li>
+              </ul>
+            </td>
+            <td style="border: none;">
+              <ul class="botones" >
+                <li class="nav-item">
+                  <a onclick="limpiar()" class="botones" style="font-size:25px; background-color:white; color: #014680; border-color: white;">Limpiar area</a>                                   
+                </li>
+            </ul>
+            </td>
+          </tr>
+        </table>
+      </div>
+    </nav>
+
+    <div class="panelizquierdo" id="mynetwork"></div>
+    <div class="tabla">
+      <table id="matrizFinal"></table>
+    </div>
+    
+      
+    <script src="js/index.js"></script>
+  </body>
+  
+</html>
