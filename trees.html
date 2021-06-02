@@ -1,0 +1,99 @@
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Generador de Graphos | Stephanie Saavedra</title>
+        <link rel="stylesheet" href="css/principal.css" />
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+        <link href="http://fonts.googleapis.com/css?family=Lato:400,700" rel="stylesheet" type="text/css"/>
+        <script type="text/javascript" src="https://unpkg.com/vis-network/standalone/umd/vis-network.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js" integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf" crossorigin="anonymous"></script>
+        <script type="text/javascript" src="https://unpkg.com/vis-network/standalone/umd/vis-network.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.1.9/p5.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.1.9/addons/p5.sound.min.js"></script>
+    </head>
+
+    <body class="hero-anime">	
+        <!--Navbar-->
+        <nav class="navbar navbar-expand-md navbar-light">
+            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+            <img src="https://www.nodosconsultora.com/wp-content/uploads/2019/11/Logo-Final-01.png" alt="logo" style="width: 180px; height: 80px;">
+            
+            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav ml-auto py-4 py-md-0">
+
+                    <li class="nav-item pl-4 pl-md-0 ml-0 ml-md-4">
+                        <a class="nav-link" href="index.html">Graphos y Jhonson</a>
+                    </li>
+                    &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                    <li class="nav-item pl-4 pl-md-0 ml-0 ml-md-4">
+                        <a class="nav-link" href="asignacion.html">Asignacion</a>
+                    </li>
+                    &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                    <li class="nav-item pl-4 pl-md-0 ml-0 ml-md-4">
+                        <a class="nav-link" href="crammer.html">Crammer</a>
+                    </li>
+                    &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                    <li class="nav-item pl-4 pl-md-0 ml-0 ml-md-4">
+                        <a class="nav-link" href="trees.html">Trees</a>
+                    </li>
+                    &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                    <li class="nav-item pl-4 pl-md-0 ml-0 ml-md-4">
+                        <a class="nav-link" href="sort.html">Sort</a>
+                    </li>
+                    &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                    <li class="nav-item pl-4 pl-md-0 ml-0 ml-md-4">
+                        <a class="nav-link" href="compet.html">Compet</a>
+                    </li>
+                </ul>
+            </div>
+            
+        </nav>
+        <!--Fin Navbar-->
+
+        <!--Botones de cada pantalla-->
+        <div class="input-box" >
+            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; 
+            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 
+            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+            <button onclick="recorrido('preOrder')" class="botones">
+                PRE-ORDER
+            </button>                                                                      
+            <button onclick="recorrido('inOrder')" id="in" class="botones">
+                IN-ORDER
+            </button>   
+            <button onclick="recorrido('postOrder')" id="post" class="botones">
+                POST-ORDER
+            </button>                                                      
+            <button onclick="Limpiar()" class="botones">
+                CLEAN
+            </button> 
+            <form action="" id="form-trees">
+                &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; 
+                &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 
+                &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                <input type="number" class="botones" name="nodos" id="nodo" placeholder="Ingrese un valor" />
+                <button type="submit" class="botones">
+                    NUEVO NODO
+                </button>
+            </form>  
+                       
+        </div>
+        <!--Fin de botones de cada pantalla-->
+        
+        <!--Panel de Canvas-->
+        <br><br>
+        <div id="my-canvas-panel" width="1200" height="2600">
+            <canvas id='myCanvas'  width="1800" height="3000" >
+                Su navegador no es compatible con canvas
+            </canvas>
+        </div>
+        <!--Final Panel de Canvas-->
+
+        <script src="js/trees.js"></script>
+    </body>
+</html>

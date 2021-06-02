@@ -1,3 +1,4 @@
+//Graphos
 var nodeIdCounter = 0;
 var edgesIdCounter = 0;
 
@@ -6,6 +7,7 @@ var nodes = new vis.DataSet([]);
 var edges = new vis.DataSet([]);
 
 var container = document.getElementById("mynetwork");
+
 var data = {
     nodes: nodes,
     edges: edges,
@@ -40,23 +42,20 @@ var options = {
     },
   },
 
-  "interaction": {
-    "navigationButtons":true,
-    "hover": true,
-  },
-
   edges: {
     color: {
       color: "#014680",
       highlight: "#014680",
       hover: "#014680",
     },
+
     arrows: {
       to: {
         enabled: true,
         type: "triangle",
       },
     },
+
     font: {
       color: "#014680",
       size: 15,
@@ -65,10 +64,22 @@ var options = {
       strokeWidth: 0,
       align: "top",
     },
-  },
-};
 
-var network = new vis.Network(container, data, options);
+    "smooth": {
+      "type": "vertical",
+      "roundness": 0
+    }
+  },
+
+  "interaction": {
+    "navigationButtons":true,
+    "hover": true,
+  },
+
+  "physics": {
+    "enabled": false
+  }
+};
 
 const añadirNodo = (nodeData, callback) => {
     if (nodes.length === 0) {
@@ -117,6 +128,8 @@ const editarEnlace = (edgeData, callback) => {
     callback(edgeData);
 }
 
+//Matriz de relacion
+
 function MostrarMatriz () {
     var arrayNodos = [];
     var arrayEnlaces = [];
@@ -124,15 +137,19 @@ function MostrarMatriz () {
 
     if (edges.length !== null) {
         while (aux < edges.length) {
-          const nodes = edges.get(aux).from.toString() + "-" + edges.get(aux).to.toString();
-          const values = edges.get(aux).label;
+          const nodes = edges.get(aux).from.toString() + "-" + edges.get(aux).to.toString(); //Obtiene el id del nodo origen y destino
+          const values = edges.get(aux).label; //Obtiene el valor entre dos nodos
+          console.log("Nodos");
+          console.log(nodes);
+          console.log("Valores");
+          console.log(values);
           arrayNodos.push(nodes);
           arrayEnlaces.push(values);
           aux++;
         }
 
       aux = 0;
-      var matrix = Array(nodes.length).fill(0).map(() => Array(nodes.length).fill(0));
+      var matrix = Array(nodes.length).fill(0).map(() => Array(nodes.length).fill(0)); //Construccion bruta de la matriz
       while (aux < arrayNodos.length) {
         var split = arrayNodos[aux].split("-");
         matrix[parseInt(split[1])][parseInt(split[0])] = arrayEnlaces[aux];
@@ -230,6 +247,81 @@ const tablx = (datos) =>{
   tabla.appendChild(cuerpo);
 }
 
-function limpiar() {
+//Guardar archivo
+function Arraydenodos() {
+  var array1=[];
+  var array2=[];
+  const s = nodes.forEach((nodo) => {
+    array1.push({id:nodo.id, label: nodo.label});
+  });
+  const n = edges.forEach((linea) => {
+     array2.push({from: linea.from, to:linea.to, id:linea.id, label: linea.label});
+ });
+ var data1={
+   node:array1,
+   edge:array2,
+
+ };
+
+  return(data1);
+} 
+
+function descarga(){
+  filename=prompt("Ingrese el nombre del archivo: ");
+
+  let file=new Blob([JSON.stringify(Arraydenodos())],{type:"aplication/.json"});
+  let a=document.createElement("a");
+  a.href= URL.createObjectURL(file);
+  a.download= filename+'.json';
+  a.click();
+}
+
+//Recuperar
+var network2=null;
+
+function cargar(dn,de){
+  nodeIdCounter ==dn[dn.length-1]["id"];
+  nodeIdCounter ++;
+  nodes= new vis.DataSet(dn);
+  edges=new vis.DataSet(de);
+  edgesIdCounter=de[de.length-1]["id"];
+  edgesIdCounter++;
+  data={
+    nodes: nodes,
+    edges: edges,
+  };
+network2= new vis.Network(container,data,options);
+}
+
+if(network2!=null){
+  network=network2;
+}
+
+function leerArchivo(e){
+  var archivo= e.target.files[0];
+  if(!archivo){
+    return;
+  }
+ var lector= new FileReader();
+ lector.onload= function(e){
+   var contenido= e.target.result;
+    gf=JSON.parse(contenido);
+   cargar(gf["node"],gf["edge"]);
+ }
+ lector.readAsText(archivo);
+}
+
+function mostrar(contenido){
+  var gf
+  gf=JSON.parse(contenido);
+  console.log(gf["node"]);
+}
+
+document.getElementById('import').addEventListener('change', leerArchivo, false);
+
+//Limpiar area
+function Limpiar() {
   location.reload();
 }
+
+var network = new vis.Network(container, data, options);

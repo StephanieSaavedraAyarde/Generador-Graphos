@@ -1,0 +1,124 @@
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Generador de Graphos | Stephanie Saavedra</title>
+        <link rel="stylesheet" href="css/principal.css" />
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+        <link href="http://fonts.googleapis.com/css?family=Lato:400,700" rel="stylesheet" type="text/css"/>
+        <script type="text/javascript" src="https://unpkg.com/vis-network/standalone/umd/vis-network.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js" integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf" crossorigin="anonymous"></script>
+        <script type="text/javascript" src="https://unpkg.com/vis-network/standalone/umd/vis-network.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.1.9/p5.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.1.9/addons/p5.sound.min.js"></script>
+    </head>
+
+    <body class="hero-anime">	
+        <!--Navbar-->
+        <nav class="navbar navbar-expand-md navbar-light">
+            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+            <img src="https://www.nodosconsultora.com/wp-content/uploads/2019/11/Logo-Final-01.png" alt="logo" style="width: 180px; height: 80px;">
+            
+            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav ml-auto py-4 py-md-0">
+
+                    <li class="nav-item pl-4 pl-md-0 ml-0 ml-md-4">
+                        <a class="nav-link" href="index.html">Graphos y Jhonson</a>
+                    </li>
+                    &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                    <li class="nav-item pl-4 pl-md-0 ml-0 ml-md-4">
+                        <a class="nav-link" href="asignacion.html">Asignacion</a>
+                    </li>
+                    &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                    <li class="nav-item pl-4 pl-md-0 ml-0 ml-md-4">
+                        <a class="nav-link" href="crammer.html">Crammer</a>
+                    </li>
+                    &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                    <li class="nav-item pl-4 pl-md-0 ml-0 ml-md-4">
+                        <a class="nav-link" href="trees.html">Trees</a>
+                    </li>
+                    &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                    <li class="nav-item pl-4 pl-md-0 ml-0 ml-md-4">
+                        <a class="nav-link" href="sort.html">Sort</a>
+                    </li>
+                    &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                    <li class="nav-item pl-4 pl-md-0 ml-0 ml-md-4">
+                        <a class="nav-link" href="compet.html">Compet</a>
+                    </li>
+                </ul>
+            </div>
+            
+        </nav>
+        <!--Fin Navbar-->
+
+        <!--Botones de cada pantalla-->
+        <div class="boton">
+            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 
+            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 
+            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 
+            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  
+            <button id="agregar" class="botones">
+                GENERAR
+            </button>  
+            <button onclick="compet()" class="botones">
+                FIND
+            </button>                                                                                                                                             
+            <button onclick="Limpiar()" class="botones">
+                CLEAN
+            </button>
+        </div>
+        <!--Fin de botones de cada pantalla-->
+        
+        <!--Panel de Data-->
+
+        <br><br>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-row clonar">
+                    <div class="form-group col-md-6">
+                        <table class="compet-tabla">
+                            <td>
+                                <label for="">Valor de X</label>
+                                <input type="number" class="form-control xx" name="xx">
+                            </td>
+                            <td>
+                                <label for="">Valor de Y</label>
+                                <input type="number" class="form-control yy" name="yy">
+                            </td>
+                        </table>
+                    </div>
+                </div>
+                <div id="contenedor"></div>
+            </div>
+        </div>
+
+        <script>
+            let agregar = document.getElementById('agregar');
+            let contenido = document.getElementById('contenedor');
+            agregar.addEventListener('click', e =>{
+                e.preventDefault();
+                let clonado = document.querySelector('.clonar');
+                let clon = clonado.cloneNode(true);
+
+                contenido.appendChild(clon).classList.remove('clonar');
+
+                let remover_ocutar = contenido.lastChild.childNodes[1].querySelectorAll('span');
+                remover_ocutar[0].classList.remove('ocultar');
+            });
+
+            contenido.addEventListener('click', e =>{
+                e.preventDefault();
+                if(e.target.classList.contains('puntero')){
+                    let contenedor  = e.target.parentNode.parentNode;
+                
+                    contenedor.parentNode.removeChild(contenedor);
+                }
+            });
+        </script>        
+        <!--Final Panel de Data-->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
+        <script src="js/compet.js"></script>
+    </body>
+</html>
